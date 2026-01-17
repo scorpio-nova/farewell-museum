@@ -25,7 +25,6 @@ export default function CreatePage() {
   const [kind, setKind] = useState<MemorialKind>("person");
   const [symbol, setSymbol] = useState<MemorialSymbol>("tree");
   const [target, setTarget] = useState(60);
-  const [note, setNote] = useState("");
   const [touched, setTouched] = useState(false);
 
   const titleError = useMemo(() => {
@@ -45,7 +44,6 @@ export default function CreatePage() {
       title: title.trim(),
       kind,
       symbol,
-      note: note.trim() ? note.trim() : undefined,
       target,
       progress: 0,
       status: "active",
@@ -129,16 +127,6 @@ export default function CreatePage() {
               className="mt-3 w-full"
             />
             <p className="mt-2 text-xs text-zinc-400">建议 40–80。</p>
-          </div>
-
-          <div>
-            <label className="text-sm text-zinc-300">备注（可选）</label>
-            <textarea
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="一句话就好。比如：想起时点一下。"
-              className="mt-2 h-24 w-full resize-none rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 outline-none focus:border-zinc-600"
-            />
           </div>
 
           <button

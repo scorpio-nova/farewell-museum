@@ -13,7 +13,6 @@ export type Memorial = {
   title: string;
   kind: MemorialKind;
   symbol: MemorialSymbol;
-  note?: string;
   target: number;
   progress: number;
   status: MemorialStatus;

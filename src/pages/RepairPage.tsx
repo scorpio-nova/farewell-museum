@@ -14,11 +14,6 @@ const symbolLabel: Record<MemorialSymbol, string> = {
   building: "建筑",
 };
 
-function formatDate(iso: string): string {
-  const d = new Date(iso);
-  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
-}
-
 // 象征物视觉组件
 function SymbolVisual({
   symbol,
@@ -267,12 +262,6 @@ export default function RepairPage() {
           </div>
         )}
 
-        {/* 备注显示 */}
-        {localMemorial.note && (
-          <div className="mb-6 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-            <p className="text-sm text-zinc-400">{localMemorial.note}</p>
-          </div>
-        )}
 
         {/* 留言输入框 */}
         {!isReadOnly && (
