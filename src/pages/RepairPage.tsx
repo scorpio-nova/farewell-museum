@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getMemorial, upsertMemorial } from "../app/storage";
-import type { Memorial, MemorialKind, MemorialSymbol } from "../app/types";
+import type { Memorial, MemorialKind, MemorialSymbol, ProgressMessage } from "../app/types";
 
 const kindLabel: Record<MemorialKind, string> = {
   person: "亲人",
@@ -91,6 +91,7 @@ export default function RepairPage() {
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [showTombstone, setShowTombstone] = useState(false);
   const [localMemorial, setLocalMemorial] = useState<Memorial | undefined>(memorial);
+  const [messageInput, setMessageInput] = useState("");
 
   // 同步 localStorage 数据
   useEffect(() => {
@@ -180,6 +181,26 @@ export default function RepairPage() {
     nav("/museum");
   }
 
+  function handleSaveMessage() {
+    if (!localMemorial || !messageInput.trim()) return;
+
+    const newMessage: ProgressMessage = {
+      progress: localMemorial.progress,
+      content: messageInput.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    const updated: Memorial = {
+      ...localMemorial,
+      messages: [...(localMemorial.messages || []), newMessage],
+      updatedAt: new Date().toISOString(),
+    };
+
+    upsertMemorial(updated);
+    setLocalMemorial(updated);
+    setMessageInput(""); // 清空输入框
+  }
+
   return (
     <div className="min-h-dvh bg-zinc-950 text-zinc-100 px-5 py-10 relative overflow-hidden">
       {/* 墓碑封印动画覆盖层 */}
@@ -250,6 +271,30 @@ export default function RepairPage() {
         {localMemorial.note && (
           <div className="mb-6 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
             <p className="text-sm text-zinc-400">{localMemorial.note}</p>
+          </div>
+        )}
+
+        {/* 留言输入框 */}
+        {!isReadOnly && (
+          <div className="mb-6 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+            <label className="block text-sm text-zinc-400 mb-2">
+              想说的话（可选）
+            </label>
+            <textarea
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              placeholder="记录此刻的心情..."
+              className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-zinc-600 focus:outline-none resize-none"
+              rows={3}
+            />
+            {messageInput.trim() && (
+              <button
+                onClick={handleSaveMessage}
+                className="mt-3 w-full rounded-lg bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white active:opacity-90"
+              >
+                保存
+              </button>
+            )}
           </div>
         )}
 
