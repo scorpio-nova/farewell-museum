@@ -58,22 +58,31 @@ export default function CreatePage() {
   return (
     <div className="min-h-dvh bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-md px-5 py-10">
-        <header className="mb-8">
-          <h1 className="text-2xl font-semibold tracking-tight">告别博物馆</h1>
-          <p className="mt-2 text-sm text-zinc-400">
-            创建一个“白膜”。用可控的积累，完成一次体面的告别。
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl font-light text-slate-700 tracking-tight">记一次告别</h1>
+          <p className="mt-3 text-sm font-light text-slate-500">
+            Record a Goodbye
           </p>
         </header>
 
+        {/* 过渡视觉元素：菱形图标 */}
+        <div className="mb-8 flex justify-center">
+          <span className="text-zinc-600 opacity-30 text-2xl">◆</span>
+        </div>
+
+        {/* 引导文字 */}
+        <p className="mb-6 text-center text-lg font-normal font-serif text-slate-500">
+          你想告别什么？
+        </p>
+
         <div className="space-y-5 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
           <div>
-            <label className="text-sm text-zinc-300">名字</label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               onBlur={() => setTouched(true)}
-              placeholder="例如：外婆 / 那段关系 / 2022 的夏天"
-              className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 outline-none focus:border-zinc-600"
+              placeholder="关系/情绪/旧物/过去的自己……"
+              className="w-full rounded-2xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-zinc-100 placeholder:text-zinc-500 placeholder:font-serif outline-none focus:border-zinc-600"
             />
             {titleError ? (
               <p className="mt-2 text-sm text-rose-400">{titleError}</p>
