@@ -13,4 +13,6 @@ export type Memorial = {
   status: MemorialStatus;
   createdAt: string; // ISO
   updatedAt: string; // ISO
+  archivedAt?: string; // ISO
+  releasedAt?: string; // ISO
 };
